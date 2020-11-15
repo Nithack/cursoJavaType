@@ -19,7 +19,7 @@ const cronometro = () => {
             time[2] = 00
             if (time[1] == 59) {
                 time[1] = 00
-                if (time[0] == 25) {
+                if (time[0] == 23) {
                     time[0] = 00
                 } else {
                     time[0] += 1
