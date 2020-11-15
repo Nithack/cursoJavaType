@@ -1,12 +1,10 @@
 const cronometro = () => {
 
     const cronometro = document.querySelector('.cronometro')
-    const start = document.querySelector('.start')
-    const reset = document.querySelector('.reset')
     let pause = false
     let seconds = 0
     let timer;
-
+    let elementStart;
     const setTimer = (seconds) => {
         const timer = new Date(seconds * 1000)
         return timer.toLocaleTimeString('pt-BR', {
@@ -14,15 +12,16 @@ const cronometro = () => {
             timeZone: 'UTC'
         })
     }
-    const startTimer = () => {
+    const startTimer = (element) => {
         clearInterval(timer)
+        elementStart = element
         if (pause) {
             cronometro.classList.add('pauseCronometro')
-            start.innerHTML = 'start'
+            element.innerHTML = 'start'
             pause = false
         } else {
             cronometro.classList.remove('pauseCronometro')
-            start.innerHTML = 'pause'
+            element.innerHTML = 'pause'
             pause = true
             timer = setInterval(() => {
                 seconds++;
@@ -31,21 +30,24 @@ const cronometro = () => {
         }
     }
     const resetTime = () => {
-        clearInterval(timer)
-        cronometro.classList.remove('pauseCronometro')
-        seconds = 0
-        start.innerHTML = 'start'
-        pause = false
-        cronometro.innerHTML = setTimer(0)
+        if (elementStart) {
+            clearInterval(timer)
+            cronometro.classList.remove('pauseCronometro')
+            seconds = 0
+            elementStart.innerHTML = 'start'
+            pause = false
+            cronometro.innerHTML = setTimer(0)
+        }
     }
-
-    start.addEventListener('click', function() {
-        startTimer()
-
-    })
-
-    reset.addEventListener('click', () => {
-        resetTime()
+    document.addEventListener('click', (e) => {
+        const element = e.target;
+        if (element.classList.contains('start')) {
+            startTimer(element)
+        }
+        if (element.classList.contains('reset')) {
+            resetTime()
+        }
     })
 }
+
 cronometro()
