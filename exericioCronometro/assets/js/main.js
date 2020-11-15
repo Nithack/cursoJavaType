@@ -14,7 +14,7 @@ const cronometro = () => {
     //     })
     // }
 
-    const timerTest = () => {
+    const testTimer = () => {
         if (time[2] == 59) {
             time[2] = 00
             if (time[1] == 59) {
@@ -63,7 +63,7 @@ const cronometro = () => {
             element.innerHTML = 'pause'
             cronometro.classList.remove('pauseCronometro')
             timer = setInterval(() => {
-                cronometro.innerHTML = timerTest()
+                cronometro.innerHTML = testTimer()
             }, 1000)
         }
     }
